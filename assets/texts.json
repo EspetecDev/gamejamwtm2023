@@ -1,0 +1,16 @@
+{
+    "start": [
+        {"mc" : "starto text by mc"},
+        {"mc" : "starto text 2 by mc"},
+        {"ai" : "starto text by ai"},
+        {"mc" : "getto recto ai gege"}
+    ],
+    "mg1start": [
+        {"ai" : "start minigame 1"},
+        {"mc" : "okay"}
+    ],
+    "mg1finishok": [
+        {"ai" : "fucker completed minigame 1"},
+        {"mc" : "gg ez"}
+    ]
+}

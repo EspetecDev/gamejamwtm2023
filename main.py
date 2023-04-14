@@ -1,4 +1,5 @@
 import pygame
+import os
 from src.scenes.MainMenu import MainMenu
 from src.scenes.InGame import InGame
 
@@ -19,11 +20,13 @@ class Game():
         pygame.init()
         pygame.mixer.init()
         pygame.display.set_caption(config["title"])
+        self.font = pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 12)
         self.screen = pygame.display.set_mode(config["res"])
         self.running = True
         self.clock = pygame.time.Clock()
         self.levels = {"mainMenu": MainMenu(self), "ingame":InGame(self)}
         self.currentLevel = self.levels["mainMenu"]
+        self.events = []
 
     def update(self):
         self.currentLevel.update()
@@ -40,8 +43,8 @@ class Game():
         if newGame == self.currentLevel.name:
             return
         
-        self.currentLevel.quit()
         self.currentLevel = self.levels[newGame]
+        self.currentLevel.start()
 
 if __name__ == "__main__":
     game = Game()
@@ -49,7 +52,8 @@ if __name__ == "__main__":
     
     while game.running:
         game.clock.tick(60)
-        for e in pygame.event.get():
+        game.events = pygame.event.get()
+        for e in game.events:
             if e.type == pygame.QUIT:
                 game.running = False
         game.update()
