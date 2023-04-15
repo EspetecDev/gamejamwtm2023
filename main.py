@@ -3,12 +3,13 @@ import os
 from src.scenes.MainMenu import MainMenu
 from src.scenes.InGame import InGame
 
-global config
-
 config = {
     "title": "GameJam WTM 2023",
     "res": (1280, 720),
-    "minigame_res": (345, 670)
+    "minigame_res": (345, 670),
+    "minigame_list": ["fly", "bomb", "clock"],
+    "minigame_num": 5,
+    "minigame_time": 3
 }
 
 class Game():
@@ -20,6 +21,7 @@ class Game():
         pygame.init()
         pygame.mixer.init()
         pygame.display.set_caption(config["title"])
+        self.config = config
         self.fonts = {
             "regular": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 12),
             "dialog": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 24)

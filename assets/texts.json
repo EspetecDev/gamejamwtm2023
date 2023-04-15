@@ -1,4 +1,5 @@
 {
+    "empty": [{}],
     "start": [
         {
             "character": "Nyx",
@@ -27,7 +28,7 @@
             "text": "PATHETIC!!! You  never stood a change against GENESIS."
         }
     ],
-    "fail":  [
+    "fail1":  [
     	{
             "character": "Nyx",
             "text": "Nooo! What am I doing? I should not make those rookie mistakes..."
@@ -35,6 +36,16 @@
         {
             "character": "GENESIS",
             "text": "HA! Ha! HA! If that's everything you've got, this will be over soon."
+        }
+    ],
+    "fail2":  [
+    	{
+            "character": "Nyx",
+            "text": "Nooo! What am I doing? I should not make those rookie mistakes...2"
+        },
+        {
+            "character": "GENESIS",
+            "text": "HA! Ha! HA! If that's everything you've got, this will be over soon. 2"
         }
     ],
     "end": [
@@ -48,7 +59,7 @@
         }
     ]
 ,
-    "mg1_start": [
+    "clock_start": [
         {
             "character": "Nyx",
             "text": "So your security only has 5 levels, this is going to be easy!"
@@ -59,7 +70,7 @@
         }
     ]
     ,
-    "mg2_start": [
+    "bomb_start": [
         {
             "character": "Nyx",
             "text": "aaaaa"
@@ -70,7 +81,7 @@
         }
     ]
     ,
-    "mg3_start": [
+    "fly_start": [
         {
             "character": "Nyx",
             "text": "aaaaa"
