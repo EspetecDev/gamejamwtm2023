@@ -3,6 +3,8 @@ import os
 from src.scenes.MainMenu import MainMenu
 from src.scenes.InGame import InGame
 
+os.environ['SDL_VIDEO_CENTERED'] = '1' # You have to call this before pygame.init()
+
 config = {
     "title": "GameJam WTM 2023",
     "res": (1280, 720),
@@ -25,10 +27,9 @@ class Game():
         self.config = config
         self.fonts = {
             "regular": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 12),
-            "dialog": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 24)
+            "dialog": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 20)
         }
-        self.screen = pygame.display.set_mode(config["res"])
-        # self.minigameSurface = pygame.display.set_mode(config["minigame_res"])
+        self.screen = pygame.display.set_mode(config["res"], pygame.SCALED | pygame.RESIZABLE)
         self.running = True
         self.clock = pygame.time.Clock()
         self.levels = {"mainMenu": MainMenu(self), "ingame":InGame(self)}
@@ -63,6 +64,10 @@ if __name__ == "__main__":
         for e in game.events:
             if e.type == pygame.QUIT:
                 game.running = False
+            if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_F11:
+                    pass
+                    # pygame.display.toggle_fullscreen()
         game.update()
         game.render()
     

@@ -16,7 +16,8 @@ class InGame:
         #init minigames
         self.minigames = self.generateMinigames()
         # init texts
-        self.startTextCoords = {'x': 316, 'y': 548}
+        self.startTextCoords = {'x': 455, 'y': 530}
+        self.limitchars = 25
         self.dialogVerticalSpacing = 30
         f = open(os.getcwd()+'/assets/texts.json')
         self.texts = json.load(f)
@@ -135,14 +136,13 @@ class InGame:
                 
 
     def formatText(self, text):
-        limitchars = 35
         lines = []
         text_rects = []
         curr_line = ""
         splitted_text = text.split(" ")
         for word in splitted_text:
             temp_curline = curr_line + ' ' + word
-            if len(temp_curline) > limitchars:
+            if len(temp_curline) > self.limitchars:
                 lines.append(curr_line)
                 curr_line = ' ' + word
             elif word == splitted_text[-1]:
@@ -151,7 +151,7 @@ class InGame:
                 curr_line = curr_line + ' ' + word
         # lines[-1] = lines[-1] + temp_curline
         for l in lines:
-            text_rects.append(self.game.fonts['dialog'].render(l, True, (0,0,0)))
+            text_rects.append(self.game.fonts['dialog'].render(l, True, (255,255,255)))
         return text_rects
 
             
