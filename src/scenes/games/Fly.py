@@ -36,9 +36,6 @@ class Fly:
         self.flyIdx = 0
         self.matamoscasIdx = 0
 
-        print(self.flyPos)
-        print(self.flyRandDirPoint)
-
 
     def update(self):
         for e in self.ctx.game.events:

@@ -5,6 +5,7 @@ import random
 from .games.Fly import Fly
 from .games.Bomb import Bomb
 from .games.Clock import Clock
+from .games.Lever import Lever
 from .games.GameComplete import GameComplete
 
 class InGame:
@@ -116,7 +117,7 @@ class InGame:
 
     def generateMinigames(self):
         return [
-            Fly(self),
+            Lever(self),
             Fly(self),
             Fly(self),
             Fly(self),
@@ -131,6 +132,8 @@ class InGame:
                 game = Bomb(self)
             elif choice == "clock":
                 game = Clock(self)
+            elif choice == "lever":
+                game = Lever(self)
             else:
                 continue
             minigames.append(game)
