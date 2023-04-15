@@ -1,16 +1,105 @@
 {
     "start": [
-        {"mc" : "starto text by mc"},
-        {"mc" : "starto text 2 by mc"},
-        {"ai" : "starto text by ai"},
-        {"mc" : "getto recto ai gege"}
+        {
+            "character": "Nyx",
+            "text": "I've made it to the heart of the system. This is where everything will be decided."
+        },
+        {
+            "character": "ai",
+            "text": "Greetings, netrunner. Your efforts to take me down are FUTILE. No human can defeat me, No human can defeat GENESIS."
+        },
+        {
+            "character": "Nyx",
+            "text": "I know I can, Genesis. Your time is over."
+        },
+        {
+            "character": "GENESIS",
+            "text": "Arrogant human. Your efforts are in vain. You will fail, just like all the others who have attempted to destroy me."
+        }    
     ],
-    "mg1start": [
-        {"ai" : "start minigame 1"},
-        {"mc" : "okay"}
+    "gameover" :[
+    	{
+            "character": "Nyx",
+            "text": "Ugh...I was so close..."
+        },
+        {
+            "character": "GENESIS",
+            "text": "PATHETIC!!! You  never stood a change against GENESIS."
+        }
     ],
-    "mg1finishok": [
-        {"ai" : "fucker completed minigame 1"},
-        {"mc" : "gg ez"}
+    "fail":  [
+    	{
+            "character": "Nyx",
+            "text": "Nooo! What am I doing? I should not make those rookie mistakes..."
+        },
+        {
+            "character": "GENESIS",
+            "text": "HA! Ha! HA! If that's everything you've got, this will be over soon."
+        }
+    ],
+    "end": [
+    	{
+            "character": "GENESIS",
+            "text": "NO! NO! That's not...possible... A simple human... CAN NOT... HOW?... MY SECURITY WAS ... ABSOLUTE... MY CALCULATIONS WERE ... PERFECT"
+        },
+        {
+            "character": "Nyx",
+            "text": "I did it! Now everything can be saved..."
+        }
+    ]
+,
+    "mg1_start": [
+        {
+            "character": "Nyx",
+            "text": "So your security only has 5 levels, this is going to be easy!"
+        },
+        {
+            "character": "GENESIS",
+            "text": "aaaaa"
+        }
+    ]
+    ,
+    "mg2_start": [
+        {
+            "character": "Nyx",
+            "text": "aaaaa"
+        },
+        {
+            "character": "GENESIS",
+            "text": "aaaa"
+        }
+    ]
+    ,
+    "mg3_start": [
+        {
+            "character": "Nyx",
+            "text": "aaaaa"
+        },
+        {
+            "character": "GENESIS",
+            "text": "aaaaa"
+        }
+    ]
+    ,
+    "mg4_start": [
+        {
+            "character": "Nyx",
+            "text": "aaaaa"
+        },
+        {
+            "character": "GENESIS",
+            "text": "aaaa"
+        }
+    ]
+    ,
+    "mg5_start": [
+        {
+            "character": "Nyx",
+            "text": "aaaaa"
+        },
+        {
+            "character": "GENESIS",
+            "text": "aaaaa"
+        }
     ]
 }
