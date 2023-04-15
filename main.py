@@ -9,7 +9,8 @@ config = {
     "minigame_res": (345, 670),
     "minigame_list": ["fly", "bomb", "clock"],
     "minigame_num": 5,
-    "minigame_time": 3
+    "minigame_time": 3,
+    "lives": 3
 }
 
 class Game():

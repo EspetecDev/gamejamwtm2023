@@ -20,6 +20,8 @@ class InGame:
         self.dialogVerticalSpacing = 30
         f = open(os.getcwd()+'/assets/texts.json')
         self.texts = json.load(f)
+
+        # assets
         self.bg = pygame.image.load(os.getcwd()+'/assets/levels/ingame/Placeholder-big.png')
 
     def start(self):
@@ -27,6 +29,7 @@ class InGame:
         self.currMinigame = 0
         self.currText = self.texts['start']
         self.currTextIdx = 0
+        self.currLives = self.game.config['lives']
 
     def update(self):
         for e in self.game.events:
@@ -40,29 +43,51 @@ class InGame:
 
             if e.type == pygame.MOUSEBUTTONDOWN:
                 print(pygame.mouse.get_pos())
+        
+        if self.currentState == 'playing':
+            self.minigames[self.currMinigame].update()
 
     def render(self):
         # 305 116 star minigame vp
         # 316 548 start text
         # 80x40 square minigame
+        # checker if text is empty
         if self.currText[0]:
             dialogObj = self.currText[self.currTextIdx]
 
         dbgtext = self.game.fonts['regular'].render('Current minigame: '+str(self.currMinigame), True, (255,255,255))
         dbgtext2 = self.game.fonts['regular'].render('Current state: '+str(self.currentState), True, (255,255,255))
-        # TODO: limit to blocks of 35 chars
+        # dialogs
         dialogStr = dialogObj['character'] + ': '+dialogObj['text'] if self.currText[0] else ""
         dialogs = self.formatText(dialogStr)
-        # numchars = 35
-        # dialogStr = [dialogStr[i:i+numchars] for i in range(0, len(dialogStr), numchars)]
-        # dialog = self.game.fonts['dialog'].render(dialogStr, True, (0,0,0))
-        # text.get_rect().center = (5, 5)
+
         self.game.screen.blit(self.bg, (0,0))
+
+        ## RENDER DEBUG
         self.game.screen.blit(dbgtext, (305, 116))
         self.game.screen.blit(dbgtext2, (305, 130))
+
+        # render dialogs
         for i in range(len(dialogs)):
             self.game.screen.blit(dialogs[i], (self.startTextCoords['x'], self.startTextCoords['y'] + (i*self.dialogVerticalSpacing)))
-        # self.renderGameMap()
+
+    def changeMinigame(self, state):
+        print('game '+self.minigames[self.currMinigame].name+' state: '+state)
+        if state == 'fail':
+            self.currLives = self.currLives - 1
+            if self.currLives == 0:
+                self.currentState = 'gameover'
+            else:
+                self.currentState = 'failed'
+                self.minigames[self.currMinigame].start()
+        elif state == 'success':
+            if self.currMinigame < self.game.config['minigame_num']-1:
+                self.currMinigame = self.currMinigame + 1
+                self.currentState = 'mg_start'
+                self.minigames[self.currMinigame].start()
+        self.nextDialog()
+            
+
 
 
     def generateMinigames(self):
@@ -100,6 +125,14 @@ class InGame:
             elif self.currentState == 'failed':
                 self.currTextIdx = 0
                 self.currText = self.texts['fail'+str(random.randint(1,2))]
+                self.currentState = 'mg_start'
+            elif self.currentState == 'gameover':
+                self.currTextIdx = 0
+                self.currText = self.texts['gameover']
+                self.currentState = 'tomenu'
+            elif self.currentState == 'tomenu':
+                self.game.changeLevel('mainMenu')
+                
 
     def formatText(self, text):
         limitchars = 35

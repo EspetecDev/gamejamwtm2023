@@ -10,7 +10,12 @@ class Bomb:
         pass
 
     def update(self):
-        pass
+        for e in self.ctx.game.events:
+            if e.type == pygame.KEYDOWN:
+                if e.key == pygame.K_p:
+                    self.ctx.changeMinigame('fail')
+                elif e.key == pygame.K_o:
+                    self.ctx.changeMinigame('success')
 
     def render(self):
         pass
