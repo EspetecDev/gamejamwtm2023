@@ -16,6 +16,8 @@ class InGame:
         #init minigames
         self.minigames = self.generateMinigames()
         # init texts
+        self.startTextCoords = {'x': 316, 'y': 548}
+        self.dialogVerticalSpacing = 30
         f = open(os.getcwd()+'/assets/texts.json')
         self.texts = json.load(f)
         self.bg = pygame.image.load(os.getcwd()+'/assets/levels/ingame/Placeholder-big.png')
@@ -50,12 +52,16 @@ class InGame:
         dbgtext2 = self.game.fonts['regular'].render('Current state: '+str(self.currentState), True, (255,255,255))
         # TODO: limit to blocks of 35 chars
         dialogStr = dialogObj['character'] + ': '+dialogObj['text'] if self.currText[0] else ""
-        dialog = self.game.fonts['dialog'].render(dialogStr, True, (0,0,0))
+        dialogs = self.formatText(dialogStr)
+        # numchars = 35
+        # dialogStr = [dialogStr[i:i+numchars] for i in range(0, len(dialogStr), numchars)]
+        # dialog = self.game.fonts['dialog'].render(dialogStr, True, (0,0,0))
         # text.get_rect().center = (5, 5)
         self.game.screen.blit(self.bg, (0,0))
         self.game.screen.blit(dbgtext, (305, 116))
         self.game.screen.blit(dbgtext2, (305, 130))
-        self.game.screen.blit(dialog, (316, 548))
+        for i in range(len(dialogs)):
+            self.game.screen.blit(dialogs[i], (self.startTextCoords['x'], self.startTextCoords['y'] + (i*self.dialogVerticalSpacing)))
         # self.renderGameMap()
 
 
@@ -94,6 +100,27 @@ class InGame:
             elif self.currentState == 'failed':
                 self.currTextIdx = 0
                 self.currText = self.texts['fail'+str(random.randint(1,2))]
+
+    def formatText(self, text):
+        limitchars = 35
+        lines = []
+        text_rects = []
+        curr_line = ""
+        splitted_text = text.split(" ")
+        for word in splitted_text:
+            temp_curline = curr_line + ' ' + word
+            if len(temp_curline) > limitchars:
+                lines.append(curr_line)
+                curr_line = ' ' + word
+            elif word == splitted_text[-1]:
+                lines.append(temp_curline)
+            else:
+                curr_line = curr_line + ' ' + word
+        # lines[-1] = lines[-1] + temp_curline
+        for l in lines:
+            text_rects.append(self.game.fonts['dialog'].render(l, True, (0,0,0)))
+        return text_rects
+
             
 
     # def renderGameMap(self):
