@@ -5,13 +5,18 @@ import random
 from .games.Fly import Fly
 from .games.Bomb import Bomb
 from .games.Clock import Clock
-
+from .games.GameComplete import GameComplete
 
 class InGame:
 
     def __init__(self, game):
         self.name = 'ingame'
         self.game = game
+
+        self.viewportPos = {'x': 240, 'y': 30}
+        self.viewportSize = {'x': 800, 'y': 450}
+
+        self.gameComplete = GameComplete(self)
 
         #init minigames
         self.minigames = self.generateMinigames()
@@ -33,6 +38,12 @@ class InGame:
         self.currLives = self.game.config['lives']
 
     def update(self):
+        
+        if self.currentState == 'playing':
+            self.minigames[self.currMinigame].update()
+        if self.currentState == 'gamecomplete':
+            self.gameComplete.update()
+
         for e in self.game.events:
             if e.type == pygame.KEYDOWN:
                 if e.key == pygame.K_RETURN:
@@ -45,8 +56,6 @@ class InGame:
             if e.type == pygame.MOUSEBUTTONDOWN:
                 print(pygame.mouse.get_pos())
         
-        if self.currentState == 'playing':
-            self.minigames[self.currMinigame].update()
 
     def render(self):
         # 305 116 star minigame vp
@@ -58,14 +67,26 @@ class InGame:
 
         dbgtext = self.game.fonts['regular'].render('Current minigame: '+str(self.currMinigame), True, (255,255,255))
         dbgtext2 = self.game.fonts['regular'].render('Current state: '+str(self.currentState), True, (255,255,255))
+
+        dbgrect = pygame.draw.rect(self.game.screen, (255,0,0), pygame.Rect(
+            self.viewportPos['x'],
+            self.viewportPos['y'],
+            self.viewportSize['x'],
+            self.viewportSize['y']), 2)
         # dialogs
         dialogStr = dialogObj['character'] + ': '+dialogObj['text'] if self.currText[0] else ""
         dialogs = self.formatText(dialogStr)
 
+        
+        if self.currentState == 'playing':
+            self.minigames[self.currMinigame].render()
+        if self.currentState == 'gamecomplete':
+            self.gameComplete.render()
+
         self.game.screen.blit(self.bg, (0,0))
 
         ## RENDER DEBUG
-        self.game.screen.blit(dbgtext, (305, 116))
+        self.game.screen.blit(dbgtext,(305, 116))
         self.game.screen.blit(dbgtext2, (305, 130))
 
         # render dialogs
@@ -84,14 +105,23 @@ class InGame:
         elif state == 'success':
             if self.currMinigame < self.game.config['minigame_num']-1:
                 self.currMinigame = self.currMinigame + 1
-                self.currentState = 'mg_start'
+                self.currentState = 'start'
                 self.minigames[self.currMinigame].start()
+            else:
+                self.currentState = 'gamecomplete'
         self.nextDialog()
             
 
 
 
     def generateMinigames(self):
+        return [
+            Fly(self),
+            Fly(self),
+            Fly(self),
+            Fly(self),
+            Fly(self),
+        ]
         minigames = []
         choices = random.choices(self.game.config['minigame_list'], k=self.game.config['minigame_num'])
         for choice in choices:
@@ -122,15 +152,20 @@ class InGame:
             elif self.currentState == 'mg_start':
                 self.currTextIdx = 0
                 self.currText = self.texts['empty']
+                self.minigames[self.currMinigame].start()
                 self.currentState = 'playing'
             elif self.currentState == 'failed':
                 self.currTextIdx = 0
                 self.currText = self.texts['fail'+str(random.randint(1,2))]
                 self.currentState = 'mg_start'
             elif self.currentState == 'gameover':
+                self.currentState = 'tomenu'
+            elif self.currentState == 'gamecomplete_text':
                 self.currTextIdx = 0
                 self.currText = self.texts['gameover']
-                self.currentState = 'tomenu'
+                self.currentState == 'gameover'
+                self.gameComplete.start()
+                self.currentState = 'gamecomplete'
             elif self.currentState == 'tomenu':
                 self.game.changeLevel('mainMenu')
                 
@@ -149,7 +184,6 @@ class InGame:
                 lines.append(temp_curline)
             else:
                 curr_line = curr_line + ' ' + word
-        # lines[-1] = lines[-1] + temp_curline
         for l in lines:
             text_rects.append(self.game.fonts['dialog'].render(l, True, (255,255,255)))
         return text_rects

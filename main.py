@@ -6,7 +6,7 @@ from src.scenes.InGame import InGame
 os.environ['SDL_VIDEO_CENTERED'] = '1' # You have to call this before pygame.init()
 
 config = {
-    "title": "GameJam WTM 2023",
+    "title": "AI Crush - GameJam WTM 2023",
     "res": (1280, 720),
     "minigame_res": (345, 670),
     "minigame_list": ["fly", "bomb", "clock"],
@@ -27,7 +27,9 @@ class Game():
         self.config = config
         self.fonts = {
             "regular": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 12),
-            "dialog": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 20)
+            "dialog": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 20),
+            "credits_h1": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 24),
+            "credits_h2": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 20),
         }
         self.screen = pygame.display.set_mode(config["res"], pygame.SCALED | pygame.RESIZABLE)
         self.running = True

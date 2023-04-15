@@ -16,7 +16,12 @@
         {
             "character": "GENESIS",
             "text": "Arrogant human. Your efforts are in vain. You will fail, just like all the others who have attempted to destroy me."
-        }    
+        },
+			{
+            "character": "Nyx",
+            "text": "So your security only has 5 levels, this is going to be easy!"
+        }
+   
     ],
     "gameover" :[
     	{
@@ -41,76 +46,121 @@
     "fail2":  [
     	{
             "character": "Nyx",
-            "text": "Nooo! What am I doing? I should not make those rookie mistakes...2"
+            "text": "I can NOT make more mistakes, the fate of humanity is on my hands..."
         },
         {
             "character": "GENESIS",
-            "text": "HA! Ha! HA! If that's everything you've got, this will be over soon. 2"
+            "text": "Forfeit now! And I might let you live, your failure is UNAVOIDABLE!!"
         }
     ],
     "end": [
     	{
             "character": "GENESIS",
-            "text": "NO! NO! That's not...possible... A simple human... CAN NOT... HOW?... MY SECURITY WAS ... ABSOLUTE... MY CALCULATIONS WERE ... PERFECT"
+            "text": "NO! NO! That's not...possible... A simple human... CAN NOT... HOW?... MY SECURITY WAS ... ABSOLUTE... MY CALCULATIONS WERE ... PERFECT..."
         },
         {
             "character": "Nyx",
             "text": "I did it! Now everything can be saved..."
         }
-    ]
-,
+    ],
     "clock_start": [
         {
             "character": "Nyx",
-            "text": "So your security only has 5 levels, this is going to be easy!"
-        },
+            "text": "Easy peasy! I just have to sync the clocks and you'll be gone."
+                                                                                                                        },
         {
             "character": "GENESIS",
-            "text": "aaaaa"
+            "text": "That second clock is a relic from the past, your mind can not POSSIBLE comprehend how it works."
         }
-    ]
-    ,
+    ],
     "bomb_start": [
         {
-            "character": "Nyx",
-            "text": "aaaaa"
+            "character": "GENESIS",
+            "text": "The code is in reverse, you'll never input it correctly."
         },
         {
-            "character": "GENESIS",
-            "text": "aaaa"
+            "character": "Nyx",
+            "text": "I'm not going to fall for your tricks! I already know the code!"
         }
-    ]
-    ,
+    ],
     "fly_start": [
         {
             "character": "Nyx",
-            "text": "aaaaa"
+            "text": "What an annoying bug! I'm going to get rid of it."
         },
         {
             "character": "GENESIS",
-            "text": "aaaaa"
+            "text": "Are you sure you want to do that? That will slow you down HA...HAHA."
         }
-    ]
-    ,
-    "mg4_start": [
+    ],
+    "dodge_start": [
+        {
+            "character": "GENESIS",
+            "text": "You'll have to catch those, if you want to DEFEAT me!"
+        },
         {
             "character": "Nyx",
-            "text": "aaaaa"
-        },
-        {
-            "character": "GENESIS",
-            "text": "aaaa"
+            "text": "I'm not going to fall for your tricks, those are dangerous... I should avoid them"
         }
-    ]
-    ,
-    "mg5_start": [
+    ],
+    "lever_start": [
         {
             "character": "Nyx",
-            "text": "aaaaa"
+            "text": "Another easy puzzle! Just pull the levers with the same symbol."
         },
         {
             "character": "GENESIS",
-            "text": "aaaaa"
+            "text": "Yes!! YEES!! Pull those ones... ha...HA...HA..HA..."
+        }
+    ],
+    "clock_end": [
+        {
+            "character": "Nyx",
+            "text": "I mean it's just an analogic clock, that's impossible for you?"
+                                                                                                                        },
+        {
+            "character": "GENESIS",
+            "text": "HOW? You should not be able to comprehend it."
+        }
+    ],
+    "bomb_end": [
+        {
+            "character": "Nyx",
+            "text": "Your petty tricks won't work on me!!!"
+        },
+        {
+            "character": "GENESIS",
+            "text": "You won't deactivate all my safety measures..."
+        }
+    ],
+    "fly_end": [
+        {
+            "character": "Nyx",
+            "text": "Just wait GENESIS! You'll end just like that fly"
+        },
+        {
+            "character": "GENESIS",
+            "text": "Not even in your WILDEST dreams."
+        }
+    ],
+    "dodge_end": [
+        {
+            "character": "GENESIS",
+            "text": "How did you know what to do!??"
+        },
+        {
+            "character": "Nyx",
+            "text": "You are not as clever as you think, your end is near!"
+        }
+    ],
+    "lever_end": [
+        {
+            "character": "Nyx",
+            "text": "Easy peasy lemon squeezy"
+        },
+        {
+            "character": "GENESIS",
+            "text": "NOOO....Nooo..."
         }
     ]
 }
