@@ -7,7 +7,7 @@ class Bomb:
         self.name = 'bomb'
 
     def start(self):
-        pass
+        self.code = 'test'
 
     def update(self):
         for e in self.ctx.game.events:
