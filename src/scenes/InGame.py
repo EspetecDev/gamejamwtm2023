@@ -6,6 +6,7 @@ from .games.Fly import Fly
 from .games.Bomb import Bomb
 from .games.Clock import Clock
 from .games.Lever import Lever
+from .games.Dodge import Dodge
 from .games.GameComplete import GameComplete
 
 class InGame:
@@ -78,13 +79,13 @@ class InGame:
         dialogStr = dialogObj['character'] + ': '+dialogObj['text'] if self.currText[0] else ""
         dialogs = self.formatText(dialogStr)
 
-        self.game.screen.blit(self.bg, (0,0))
         
         if self.currentState == 'playing':
             self.minigames[self.currMinigame].render()
         if self.currentState == 'gamecomplete':
             self.gameComplete.render()
 
+        self.game.screen.blit(self.bg, (0,0))
 
         ## RENDER DEBUG
         self.game.screen.blit(dbgtext,(305, 116))
@@ -117,7 +118,7 @@ class InGame:
 
     def generateMinigames(self):
         return [
-            Lever(self),
+            Dodge(self),
             Fly(self),
             Fly(self),
             Fly(self),

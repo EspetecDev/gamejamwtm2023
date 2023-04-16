@@ -40,7 +40,7 @@ class Game():
 
         # music
         pygame.mixer.music.load(os.getcwd()+'/assets/sfx/game_music.mp3')
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.05)
 
     def update(self):

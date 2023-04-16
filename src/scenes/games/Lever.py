@@ -83,21 +83,10 @@ class Lever:
                 if self.currLeverOver != -1:
                     self.levers[self.currLeverOver].clickLever()
         
-        #                           anim time / num frames * fps
-
     def render(self):
         self.ctx.game.screen.blit(self.mainSymbol, self.mainSymbolPos)
         for l in self.levers:
             l.render(self.ctx.game.screen)
-
-        leversmargin = 125
-        totalLeversSize = (self.numLevers * (125 + leversmargin)) - (leversmargin)
-        startPosX = (self.ctx.viewportPos['x'] + (self.ctx.viewportSize['x']/2)) - (totalLeversSize/2)
-        dbgrect = pygame.draw.rect(self.ctx.game.screen, (0,255,0), pygame.Rect(
-            startPosX,
-            230,
-            totalLeversSize,
-            254), 2)
 
     def close(self):
         pass
