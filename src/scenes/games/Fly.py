@@ -7,6 +7,11 @@ class Fly:
     def __init__(self, ctx):
         self.ctx =  ctx
         self.name = 'fly'
+
+        self.flySound = pygame.mixer.Sound(os.getcwd()+'/assets/levels/games/fly/mosca-volando.wav')
+        self.matamoscasSound = pygame.mixer.Sound(os.getcwd()+'/assets/levels/games/fly/matamoscas.wav')
+
+        self.bg = pygame.image.load(os.getcwd()+'/assets/levels/games/fly/bg.jpg')
         self.fly = [
             pygame.image.load(os.getcwd()+'/assets/levels/games/fly/fly1.png'),
             pygame.image.load(os.getcwd()+'/assets/levels/games/fly/fly2.png'),
@@ -22,6 +27,7 @@ class Fly:
         self.flySpeed = 1
         self.flyMoveCurrentFrame = 0
         self.flyCurrentFrame = 0
+
         
 
     def start(self):
@@ -35,6 +41,7 @@ class Fly:
         self.matamoscasPos = (0,0)
         self.flyIdx = 0
         self.matamoscasIdx = 0
+        self.flySound.play(-1, self.ctx.game.config['minigame_time'] * 1000)
 
 
     def update(self):
@@ -77,9 +84,12 @@ class Fly:
         self.matamoscasPos = pygame.mouse.get_pos()
 
     def render(self):
+        self.ctx.game.screen.blit(self.bg, (self.ctx.viewportPos['x'], self.ctx.viewportPos['y']))
         if not self.win:
             self.ctx.game.screen.blit(self.fly[self.flyIdx], (self.flyPos['x'], self.flyPos['y']))
-        self.ctx.game.screen.blit(self.matamoscas[0], self.matamoscasPos)
+        self.ctx.game.screen.blit(self.matamoscas[self.matamoscasIdx], self.matamoscasPos)
+
+        self.matamoscasIdx = 0
         # dbgrect = pygame.draw.rect(self.ctx.game.screen, (255,0,0), pygame.Rect(
         #     self.flyPos['x'],
         #     self.flyPos['y'],
@@ -92,7 +102,7 @@ class Fly:
 
     def matamoscasHit(self):
         self.matamoscasIdx = 1
-        
+        self.matamoscasSound.play()
         checkLeft = self.flyPos['x'] <= self.matamoscasPos[0] + self.matamoscas[0].get_width()
         checkRight = self.flyPos['x'] > self.matamoscasPos[0]
         checkUp = self.flyPos['y'] > self.matamoscasPos[1]

@@ -4,10 +4,11 @@ import random
 
 class LeverActor:
 
-    def __init__(self, symbolId, symbol, leverPos):
+    def __init__(self, symbolId, symbol, leverPos, leverSound):
         self.symbolId = symbolId
         self.symbolFrame = symbol
         self.leverPos = leverPos
+        self.leverSound = leverSound
         self.state = 0
         self.leverFrames = [
             pygame.image.load(os.getcwd()+'/assets/levels/games/lever/lever_up.png'),
@@ -18,6 +19,7 @@ class LeverActor:
 
     def clickLever(self):
         self.state = 1 if self.state == 0 else 0
+        self.leverSound.play()
 
     def render(self, screen):
         screen.blit(self.symbolFrame, self.symbolPos)
@@ -30,7 +32,8 @@ class Lever:
         self.name = 'lever'
 
         self.numLevers = 4
-
+        self.leverSound = pygame.mixer.Sound(os.getcwd()+'/assets/levels/games/lever/lever.wav')
+        self.bg = pygame.image.load(os.getcwd()+'/assets/levels/games/lever/bg.jpg')
         self.symbols = [
             pygame.image.load(os.getcwd()+'/assets/levels/games/lever/symbol1.png'),
             pygame.image.load(os.getcwd()+'/assets/levels/games/lever/symbol2.png'),
@@ -46,7 +49,7 @@ class Lever:
         for i in range(self.numLevers):
             leverPos = (startPosX + ((125 + leversmargin)*i),  230)
             symbolIdx = random.randint(0, len(self.symbols)-1)
-            self.levers.append(LeverActor(symbolIdx, self.symbols[symbolIdx], leverPos))
+            self.levers.append(LeverActor(symbolIdx, self.symbols[symbolIdx], leverPos, self.leverSound))
         
         self.mainSymbolId = random.randint(0, len(self.symbols) - 1)
         self.mainSymbol = self.symbols[self.mainSymbolId]
@@ -84,6 +87,7 @@ class Lever:
                     self.levers[self.currLeverOver].clickLever()
         
     def render(self):
+        self.ctx.game.screen.blit(self.bg, (self.ctx.viewportPos['x'], self.ctx.viewportPos['y']))
         self.ctx.game.screen.blit(self.mainSymbol, self.mainSymbolPos)
         for l in self.levers:
             l.render(self.ctx.game.screen)

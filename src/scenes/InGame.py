@@ -31,6 +31,36 @@ class InGame:
 
         # assets
         self.bg = pygame.image.load(os.getcwd()+'/assets/levels/ingame/Placeholder-big.png')
+        self.emptyLife = pygame.image.load(os.getcwd()+'/assets/levels/ingame/emptyheart.png')
+        self.fullLife = pygame.image.load(os.getcwd()+'/assets/levels/ingame/fullheart.png')
+        self.lvlRed = pygame.image.load(os.getcwd()+'/assets/levels/ingame/lvlred.png')
+        self.lvlGreen = pygame.image.load(os.getcwd()+'/assets/levels/ingame/lvlgreen.png')
+
+        self.mc = [
+            pygame.image.load(os.getcwd()+'/assets/levels/ingame/mc.png'),
+            pygame.image.load(os.getcwd()+'/assets/levels/ingame/mc2.png')
+        ]
+        self.ai = [
+            pygame.image.load(os.getcwd()+'/assets/levels/ingame/ai.png'),
+            pygame.image.load(os.getcwd()+'/assets/levels/ingame/ai2.png')
+        ]
+
+        self.lifesPos = [
+            (55, 80),
+            (120, 75),
+            (187, 68)
+        ]
+
+        self.levelsPos = [
+            (1109, 222),
+            (1108, 296),
+            (1110, 369),
+            (1108, 442),
+            (1110, 515)
+        ]
+
+        self.successSound = pygame.mixer.Sound(os.getcwd()+'/assets/levels/ingame/complete-level.wav')
+        self.failSound = pygame.mixer.Sound(os.getcwd()+'/assets/levels/ingame/fail-level.wav')
 
     def start(self):
         self.currentState = 'start'
@@ -38,6 +68,8 @@ class InGame:
         self.currText = self.texts['start']
         self.currTextIdx = 0
         self.currLives = self.game.config['lives']
+        self.mcIdx = 0
+        self.aiIdx = 0
 
     def update(self):
         
@@ -67,14 +99,14 @@ class InGame:
         if self.currText[0]:
             dialogObj = self.currText[self.currTextIdx]
 
-        dbgtext = self.game.fonts['regular'].render('Current minigame: '+str(self.currMinigame), True, (255,255,255))
-        dbgtext2 = self.game.fonts['regular'].render('Current state: '+str(self.currentState), True, (255,255,255))
+        # dbgtext = self.game.fonts['regular'].render('Current minigame: '+str(self.currMinigame), True, (255,255,255))
+        # dbgtext2 = self.game.fonts['regular'].render('Current state: '+str(self.currentState), True, (255,255,255))
 
-        dbgrect = pygame.draw.rect(self.game.screen, (255,0,0), pygame.Rect(
-            self.viewportPos['x'],
-            self.viewportPos['y'],
-            self.viewportSize['x'],
-            self.viewportSize['y']), 2)
+        # dbgrect = pygame.draw.rect(self.game.screen, (255,0,0), pygame.Rect(
+        #     self.viewportPos['x'],
+        #     self.viewportPos['y'],
+        #     self.viewportSize['x'],
+        #     self.viewportSize['y']), 2)
         # dialogs
         dialogStr = dialogObj['character'] + ': '+dialogObj['text'] if self.currText[0] else ""
         dialogs = self.formatText(dialogStr)
@@ -85,11 +117,28 @@ class InGame:
         if self.currentState == 'gamecomplete':
             self.gameComplete.render()
 
+
+        # draw assets (hp + lvls)
+        for i in range(len(self.lifesPos)):
+            self.game.screen.blit(self.fullLife if i < self.currLives else self.emptyLife , self.lifesPos[i])
+
+        for i in range(len(self.levelsPos)):
+            self.game.screen.blit(self.lvlGreen if i < self.currMinigame else self.lvlRed , self.levelsPos[i])
+
+        # draw characters
+        mcTalks = False
+        aiTalks = False
+        if self.currText[self.currTextIdx]:
+            mcTalks = self.currText[self.currTextIdx]['character'] == 'Nyx'
+            aiTalks = self.currText[self.currTextIdx]['character'] == 'ai' or self.currText[self.currTextIdx]['character'] == 'GENESIS'
+        self.game.screen.blit(self.mc[1 if mcTalks else 0] , (229,513))
+        self.game.screen.blit(self.ai[1 if mcTalks else 0] , (855,513))
+
         self.game.screen.blit(self.bg, (0,0))
 
         ## RENDER DEBUG
-        self.game.screen.blit(dbgtext,(305, 116))
-        self.game.screen.blit(dbgtext2, (305, 130))
+        # self.game.screen.blit(dbgtext,(305, 116))
+        # self.game.screen.blit(dbgtext2, (305, 130))
 
         # render dialogs
         for i in range(len(dialogs)):
@@ -98,6 +147,7 @@ class InGame:
     def changeMinigame(self, state):
         print('game '+self.minigames[self.currMinigame].name+' state: '+state)
         if state == 'fail':
+            self.failSound.play()
             self.currLives = self.currLives - 1
             if self.currLives == 0:
                 self.currentState = 'gameover'
@@ -105,6 +155,7 @@ class InGame:
                 self.currentState = 'failed'
                 self.minigames[self.currMinigame].start()
         elif state == 'success':
+            self.successSound.play()
             if self.currMinigame < self.game.config['minigame_num']-1:
                 self.currMinigame = self.currMinigame + 1
                 self.currentState = 'start'
@@ -117,13 +168,13 @@ class InGame:
 
 
     def generateMinigames(self):
-        return [
-            Dodge(self),
-            Fly(self),
-            Fly(self),
-            Fly(self),
-            Fly(self),
-        ]
+        # return [
+        #     Dodge(self),
+        #     Clock(self),
+        #     Bomb(self),
+        #     Fly(self),
+        #     Lever(self),
+        # ]
         minigames = []
         choices = random.choices(self.game.config['minigame_list'], k=self.game.config['minigame_num'])
         for choice in choices:
@@ -135,6 +186,8 @@ class InGame:
                 game = Clock(self)
             elif choice == "lever":
                 game = Lever(self)
+            elif choice == "dodge":
+                game = Dodge(self)
             else:
                 continue
             minigames.append(game)

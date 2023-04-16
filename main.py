@@ -11,7 +11,7 @@ config = {
     "minigame_res": (345, 670),
     "minigame_list": ["fly", "bomb", "clock"],
     "minigame_num": 5,
-    "minigame_time": 3,
+    "minigame_time": 6,
     "lives": 3
 }
 
@@ -30,6 +30,8 @@ class Game():
             "dialog": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 20),
             "credits_h1": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 24),
             "credits_h2": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 20),
+            "clock": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 70),
+            "digital_clock": pygame.font.Font(os.getcwd()+'/assets/fonts/pixeloid.ttf', 30)
         }
         self.screen = pygame.display.set_mode(config["res"], pygame.SCALED | pygame.RESIZABLE)
         self.running = True
@@ -40,8 +42,8 @@ class Game():
 
         # music
         pygame.mixer.music.load(os.getcwd()+'/assets/sfx/game_music.mp3')
-        # pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.05)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.5)
 
     def update(self):
         self.currentLevel.update()
