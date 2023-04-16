@@ -78,13 +78,13 @@ class InGame:
         dialogStr = dialogObj['character'] + ': '+dialogObj['text'] if self.currText[0] else ""
         dialogs = self.formatText(dialogStr)
 
+        self.game.screen.blit(self.bg, (0,0))
         
         if self.currentState == 'playing':
             self.minigames[self.currMinigame].render()
         if self.currentState == 'gamecomplete':
             self.gameComplete.render()
 
-        self.game.screen.blit(self.bg, (0,0))
 
         ## RENDER DEBUG
         self.game.screen.blit(dbgtext,(305, 116))
